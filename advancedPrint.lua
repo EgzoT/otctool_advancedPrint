@@ -62,6 +62,8 @@ function _advancedPrintTable(list, space)
 
         if type(j) == 'table' then
             _advancedPrintTable(j, space .. '  ')
+        elseif type(j) == 'userdata' then
+            _advancedPrintTable(getmetatable(j), space .. '  ')
         else
             _printValue(j, space)
         end
@@ -108,7 +110,7 @@ function _printValue(value, space)
     elseif type(value) == 'function' then
         _printFunction(value, space)
     elseif type(value) == 'userdata' then
-        _printUserdata(value, space)
+        _advancedPrintTable(getmetatable(value), space)
     elseif type(value) == 'thread' then
         _printThread(value, space)
     else
